@@ -71,4 +71,9 @@ npm run dev
 - `DELETE /api/users/:id`
 
 ## Deployment
-Railway works well for the API: create a Node service from `backend`, add the environment variables, and connect MongoDB Atlas. Deploy the frontend separately on Vercel or Netlify with `VITE_API_URL` pointing to the Railway API URL.
+The simplest reliable setup is:
+- Backend API: Render Web Service from the `backend` folder
+- Frontend: Vercel project from the `frontend` folder
+- Database: MongoDB Atlas
+
+See `DEPLOYMENT.md` for the exact settings.
