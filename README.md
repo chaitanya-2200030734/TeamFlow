@@ -6,7 +6,7 @@ TeamFlow is a full-stack team task manager for organizations. It helps a company
 
 Open the deployed app here:
 
-https://team-flow-swart.vercel.app/login
+https://team-flow-swart.vercel.app
 
 ## Tech Stack
 
