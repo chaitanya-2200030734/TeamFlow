@@ -9,6 +9,7 @@ import organizationRoutes from './routes/organizationRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import { seedTeamflowAdmin } from './utils/seedTeamflowAdmin.js';
 
 dotenv.config();
 
@@ -45,7 +46,8 @@ app.use((err, _req, res, _next) => {
 });
 
 connectDB()
-  .then(() => {
+  .then(async () => {
+    await seedTeamflowAdmin();
     app.listen(port, () => console.log(`TeamFlow API running on port ${port}`));
   })
   .catch((error) => {

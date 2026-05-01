@@ -1,35 +1,20 @@
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { connectDB } from '../config/db.js';
-import User from '../models/User.js';
+import { seedTeamflowAdmin } from '../utils/seedTeamflowAdmin.js';
 
 dotenv.config();
 
-const email = 'teamflow@admin.com';
-const password = 'admin@1234';
-
-const seedTeamflowAdmin = async () => {
+const run = async () => {
   await connectDB();
-
-  const passwordHash = await bcrypt.hash(password, 12);
-  const admin = await User.findOneAndUpdate(
-    { email },
-    {
-      name: 'TeamFlow Admin',
-      email,
-      password: passwordHash,
-      role: 'teamflow-admin',
-      organization: null
-    },
-    { new: true, upsert: true, runValidators: true }
-  ).select('name email role');
-
-  console.log(`TeamFlow admin ready: ${admin.email} (${admin.role})`);
+  process.env.SEED_TEAMFLOW_ADMIN = 'true';
+  process.env.TEAMFLOW_ADMIN_EMAIL = process.env.TEAMFLOW_ADMIN_EMAIL || 'teamflow@admin.com';
+  process.env.TEAMFLOW_ADMIN_PASSWORD = process.env.TEAMFLOW_ADMIN_PASSWORD || 'admin@1234';
+  await seedTeamflowAdmin();
   await mongoose.disconnect();
 };
 
-seedTeamflowAdmin().catch(async (error) => {
+run().catch(async (error) => {
   console.error(error.message);
   await mongoose.disconnect();
   process.exit(1);
